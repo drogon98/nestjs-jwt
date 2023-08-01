@@ -4,6 +4,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const corsConfig = {
+    // origin: '*', // This value cannot be a wildcard if we are to pass credentials as true
+    origin: 'http://localhost:3000',
+    credentials: true,
+  };
+
+  app.enableCors(corsConfig);
   const config = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('Simple JWT example')
@@ -17,7 +25,7 @@ async function bootstrap() {
   const PORT = process.env.PORT || 3002;
   await app.listen(PORT, () =>
     console.log(
-      `😂Server started on port ${PORT}. Visiti http://localhost:${PORT}/api/docs for the docs`,
+      `👏Server started on port ${PORT}. Visiti http://localhost:${PORT}/api/docs for the docs`,
     ),
   );
 }
